@@ -1,4 +1,4 @@
-import { Box, Container, Stack, Typography } from '@mui/material'
+import { Box, Container, Paper, Stack, Typography } from '@mui/material'
 import React from 'react'
 import { useTheme } from "@mui/material/styles";
 import Header from './Header';
@@ -11,13 +11,18 @@ const Conversation = ({ conversa }) => {
     const theme = useTheme();
 
     return (
-        <Container height={"100vh"} display={"flex"} justifyContent={"center"} alignItems={"center"}>
-                <Header />
-                <Box sx={{ height: "50vh", overflowY: "scroll", position: "relative" }}>
-                    <Message conversa={1} />
-                </Box>
-                <Footer />
-        </Container>
+
+
+<div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+  <Container>
+    <Header />
+    <Box sx={{ height: "50vh", overflowY: "scroll", position: "relative" }}>
+      <Message conversa={1} />
+    </Box>
+    <Footer /> 
+  </Container>
+</div>
+
 
     )
 }
