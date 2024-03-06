@@ -38,7 +38,8 @@ const Nav_Buttons = [
     icon: <Phone />,
   },
 ];
-
+// #FFEAD1
+// #FD6F2F
 const Nav_Setting = [
   {
     index: 3,

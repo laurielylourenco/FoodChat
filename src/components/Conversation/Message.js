@@ -11,14 +11,10 @@ const Message = ({ conversa }) => {
 
     const filterChats = () => {
         var msg_atd = Chat_Atendimento.filter((el) => conversa == el.id_atd);
-        console.log("id conversa:  ", conversa);
-        console.log('msg_atd:   ', msg_atd);
     }
 
     return (
-
-
-        <Box p={3}>
+        <Box  p={3} sx={{ backgroundColor: "#efefef"}} >
             <Stack spacing={3} >
          
                 {Chat_Atendimento.filter((el) => conversa == el.id_atd).map((el) => {

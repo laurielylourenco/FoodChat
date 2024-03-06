@@ -107,8 +107,6 @@ const ChatInput = ({ setOpenPicker }) => {
         >
         </StyledInput>
 
-
-
     )
 }
 
@@ -122,7 +120,7 @@ const Footer = () => {
     return (
         <>
             <Box sx={{
-                height: 100,
+                height: 50,
                 width: "100%",
                 backgroundColor: theme.palette.mode === "light" ? "#F8FAFF" : theme.palette.background,
                 boxShadow: "0px 0px 2px rgba(0,0,0,0.25)"
@@ -150,7 +148,7 @@ const Footer = () => {
                         backgroundColor: theme.palette.primary.main
                     }}>
                         <Stack sx={{
-                            height: "100%", width: "100%", alignItems: "center", justifyContent: "center"
+                            height: "100%", width: "70%", alignItems: "center", justifyContent: "center"
 
                         }}>
                             <IconButton>

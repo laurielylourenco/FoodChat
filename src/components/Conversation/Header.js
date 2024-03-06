@@ -44,8 +44,8 @@ const Header = () => {
     return (
         <>
             <Box p={2} sx={{
-                height: 100,
-                width: "100%",
+                height: 30,
+                width: "auto",
                 backgroundColor: theme.palette.mode === "light" ? "#F8FAFF" : theme.palette.background.paper,
                 boxShadow: "0px 0px 2px rgba(0,0,0,0.25)"
             }}>
@@ -77,31 +77,14 @@ const Header = () => {
                                 {faker.name.fullName()}
 
                             </Typography>
-
-                            <Typography
-                                variant='caption'
-                            >
-                                Online
-                            </Typography>
                         </Stack>
                     </Stack>
 
                     <Stack
                         direction={"row"}
                         alignItems={"center"}
-                        spacing={3}
-                    >
-                        <IconButton>
-                            <VideoCamera />
-                        </IconButton>
+                        spacing={3}>
 
-                        <IconButton>
-                            <Phone />
-                        </IconButton>
-
-                        <IconButton>
-                            <MagnifyingGlass />
-                        </IconButton>
 
                         <Divider orientation='vertical' flexItem />
 
