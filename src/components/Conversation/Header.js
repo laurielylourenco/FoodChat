@@ -39,14 +39,12 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 
 const Header = () => {
     const theme = useTheme();
-
-
     return (
         <>
             <Box p={2} sx={{
                 height: 30,
                 width: "auto",
-                backgroundColor: theme.palette.mode === "light" ? "#F8FAFF" : theme.palette.background.paper,
+                backgroundColor: "#F8FAFF" ,
                 boxShadow: "0px 0px 2px rgba(0,0,0,0.25)"
             }}>
 

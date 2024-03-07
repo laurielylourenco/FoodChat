@@ -1,11 +1,21 @@
+
 import Conversation from "./components/Conversation";
 import SignIn from "./pages/login/Sign";
 import { Box, Container, Stack, Typography } from '@mui/material'
-function App() {
-  return (
-    <div className="App" >
+// https://vps49040.publiccloud.com.br/bot/uam/castelo1.jpg
 
-      <Conversation></Conversation>
+function App() {
+  const backgroundImageStyle = {
+    backgroundImage: `url('./pablo-merchan-montes-GFW3dJRiMsQ-unsplash.jpg')`,
+  };
+
+
+  return (
+    <div className="App" style={backgroundImageStyle}  >
+
+      <Conversation>
+
+      </Conversation>
 
     </div>
   );

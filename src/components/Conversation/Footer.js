@@ -122,12 +122,10 @@ const Footer = () => {
             <Box sx={{
                 height: 50,
                 width: "100%",
-                backgroundColor: theme.palette.mode === "light" ? "#F8FAFF" : theme.palette.background,
+                backgroundColor: "#F8FAFF",
                 boxShadow: "0px 0px 2px rgba(0,0,0,0.25)"
             }}>
-                <Stack alignItems={"center"} direction={"row"}
-                    spacing={3}
-                >
+                <Stack alignItems={"center"} direction={"row"} spacing={1} >
                     <Stack sx={{ width: "100%" }}>
 
                         <Box sx={{ display: openPicker ? 'inline' : 'none', zIndex: 10, position: "fixed", bottom: 81, right: 100 }}>
@@ -148,7 +146,7 @@ const Footer = () => {
                         backgroundColor: theme.palette.primary.main
                     }}>
                         <Stack sx={{
-                            height: "100%", width: "70%", alignItems: "center", justifyContent: "center"
+                            height: "100%", width: "100%", alignItems: "center", justifyContent: "center"
 
                         }}>
                             <IconButton>
