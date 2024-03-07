@@ -12,6 +12,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
 
 function Copyright(props) {
   return (
@@ -30,7 +31,7 @@ function Copyright(props) {
 
 const defaultTheme = createTheme();
 
-export default function SignIn() {
+export default function Login() {
 
 
   const handleSubmit = (event) => {
@@ -40,6 +41,14 @@ export default function SignIn() {
       email: data.get('email'),
       password: data.get('password'),
     });
+  };
+
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    // Lógica de autenticação
+    // Após o login, redirecionar para a rota "/chat"
+    navigate('/chat');
   };
 
   return (
@@ -61,6 +70,7 @@ export default function SignIn() {
             Sign in
           </Typography>
          
+          <button onClick={handleLogin}>Login</button>
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
