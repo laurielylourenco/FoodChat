@@ -8,9 +8,9 @@ function App() {
     backgroundSize: "cover",
     backgroundPosition: "center",
   };
-
+/*  style={backgroundImageStyle} */
   return (
-    <div className="App" style={backgroundImageStyle}  >
+    <div className="App"  >
     <AppRouter></AppRouter>
 
     </div>
