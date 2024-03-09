@@ -1,4 +1,4 @@
-import { Box, Divider, Stack, Typography, Link, IconButton, Menu, MenuItem } from '@mui/material'
+import { Box, Divider, Stack, Typography, Link, IconButton, Menu, Card, CardContent, CardMedia, MenuItem } from '@mui/material'
 import * as React from 'react';
 import { useTheme } from "@mui/material/styles";
 import { DotsThreeVertical, Download, DownloadSimple, Image } from 'phosphor-react';
@@ -52,8 +52,6 @@ const DocMsg = ({ el }) => {
     )
 
 }
-
-
 
 const LinkMsg = ({ el }) => {
     const theme = useTheme();
@@ -144,6 +142,35 @@ const ReplyMsg = ({ el }) => {
 
 }
 
+const CardMsg = ({ el }) => {
+    const theme = useTheme();
+    return (
+        <Stack
+            direction={"row"}
+            justifyContent={el.incoming ? "start" : "end"}
+        >
+              <Card sx={{ width: '90%', maxWidth: 400 }}>
+                    <CardMedia
+                        component="img"
+                        alt="Avatar"
+                        height="140"
+                        image={el.imageUri}
+                        style={{ opacity: 0.85 }}
+                    />
+                    <CardContent>
+                        <Typography variant="h5" color={el.incoming ? theme.palette.text : "#fff"}>
+                            {el.title}
+                        </Typography>
+                        <Typography variant='body2' color={el.incoming ? theme.palette.text : "#fff"}>
+                            {el.message}
+                        </Typography>
+                    </CardContent>
+                </Card>
+      
+        </Stack>
+
+    );
+};
 
 
 const MediaMsg = ({ el }) => {
@@ -279,4 +306,4 @@ const MessageOptions = () => {
 }
 
 
-export { Timeline, TextMsg, MediaMsg, ReplyMsg, LinkMsg, DocMsg }
+export { Timeline, CardMsg, TextMsg, MediaMsg, ReplyMsg, LinkMsg, DocMsg }

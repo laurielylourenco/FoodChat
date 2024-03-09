@@ -1,57 +1,35 @@
 import { Box, Stack } from '@mui/material'
-import React, { useEffect } from 'react'
-import { Chat_History, Chat_Atendimento } from "../../data";
-import { DocMsg, LinkMsg, MediaMsg, ReplyMsg, TextMsg, Timeline } from './MsgTypes';
+import React, { useEffect, useState } from 'react'
+import { CardMsg, DocMsg, LinkMsg, MediaMsg, ReplyMsg, TextMsg, Timeline } from './MsgTypes';
 
-const Message = ({ conversa }) => {
-
+const Message = ({ messages }) => {
+/* 
     useEffect(() => {
-        filterChats();
-    }, [conversa]); // Executar a função quando a propriedade 'conversa' mudar
+        console.log('Mensagens atualizadas:', messages);
+    }, [messages]);  */
 
-    const filterChats = () => {
-        var msg_atd = Chat_Atendimento.filter((el) => conversa == el.id_atd);
-    }
-
+    console.log('Message>:   ', messages)
     return (
-        <Box  p={3} sx={{ backgroundColor: "#efefef"}} >
-            <Stack spacing={3} >
-         
-                {Chat_Atendimento.filter((el) => conversa == el.id_atd).map((el) => {
-
-                    switch (el.type) {
-                        case 'divider':
-                            return (
-                                <Timeline el={el} />
-                            )
-                        case 'msg':
-
-                            switch (el.subtype) {
-                                case "img":
-                                    return <MediaMsg el={el} />;
-                                case "doc":
-
-                                    return <DocMsg el={el} />;
-
-                                case "link":
-
-                                    return <LinkMsg el={el} />;
-
-
-                                case "reply":
-                                    return <ReplyMsg el={el} />;
-                                default:
-                                    return <TextMsg el={el} />;
-
-                            }
-                            break;
-
+        <Box p={3} sx={{ backgroundColor: "#efefef" }} >
+            <Stack spacing={3}>
+                {messages.map((msg, index) => {
+                    switch (msg.type) {
+                        case "img":
+                            return <MediaMsg key={index} el={msg} />;
+                        case "doc":
+                            return <DocMsg key={index} el={msg} />;
+                        case "link":
+                            return <LinkMsg key={index} el={msg} />;
+                        case "reply":
+                            return <ReplyMsg key={index} el={msg} />;
+                        case 'card':
+                            return <CardMsg key={index} el={msg} />;
                         default:
-                            return <></>;
-
+                            return <TextMsg key={index} el={msg} />;
                     }
                 })}
             </Stack>
+
 
         </Box>
 

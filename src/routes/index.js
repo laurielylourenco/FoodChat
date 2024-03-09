@@ -10,7 +10,7 @@ import Site from '../components/Site';
 const AppRouter = () => {
   const routes = useRoutes([
     { path: '/login', element: <Login /> },
-    { path: '/site', element: <Site /> },
+    { path: '/', element: <Site /> },
     { path: '/chat', element: <Conversation /> },
     { path: '/404', element: <Page404 /> },
     { path: '*', element: <Navigate to="/404" replace /> },

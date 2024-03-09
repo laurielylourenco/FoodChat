@@ -47,75 +47,92 @@ const Actions = [
     },
 ];
 
-const ChatInput = ({ setOpenPicker }) => {
+const ChatInput = ({ setOpenPicker, setMessageInput }) => {
+    const [openActions, setOpenActions] = useState(false);
 
-    const [openActions, setOpenActions] = useState(false)
+    const handleChange = (event) => {
+
+        setMessageInput(event.target.value);
+    };
 
     return (
-
-        <StyledInput variant='filled' fullWidth placeholder="Escreva uma mensagem"
+        <StyledInput
+            variant="filled"
+            fullWidth
+            placeholder="Escreva uma mensagem"
             InputProps={{
                 disableUnderline: true,
+                onChange: handleChange,
                 startAdornment: (
-                    <Stack
-                        sx={{ width: 'max-content' }}
-                    >
-                        <Stack sx={{
-                            position: "relative",
-                            display: openActions ? 'inline' : "none"
-                        }}>
-
-                            {(Actions.map((el) => (
-                                <Tooltip placement='right' title={el.title} >
-
-                                    <Fab sx={{
-                                        position: "absolute", top: -el.y,
-                                        backgroundColor: el.color
-
-                                    }} >
+                    <Stack sx={{ width: 'max-content' }}>
+                        <Stack
+                            sx={{
+                                position: 'relative',
+                                display: openActions ? 'inline' : 'none',
+                            }}
+                        >
+                            {Actions.map((el) => (
+                                <Tooltip placement="right" title={el.title} key={el.title}>
+                                    <Fab
+                                        sx={{
+                                            position: 'absolute',
+                                            top: -el.y,
+                                            backgroundColor: el.color,
+                                        }}
+                                    >
                                         {el.icon}
                                     </Fab>
                                 </Tooltip>
-
-
-                            )))}
-
+                            ))}
                         </Stack>
-
                         <InputAdornment>
-                            <IconButton>
-                                <LinkSimple
-                                    onClick={() => {
-                                        setOpenActions((prev) => !prev);
-                                    }}
-
-                                />
+                            <IconButton
+                                onClick={() => {
+                                    setOpenActions((prev) => !prev);
+                                }}
+                            >
+                                <LinkSimple />
                             </IconButton>
                         </InputAdornment>
                     </Stack>
                 ),
-
-                endAdornment: <InputAdornment>
-                    <IconButton onClick={() => {
-                        setOpenPicker((prev) => !prev); // pegando valor anterior é alterando 
-                    }}>
-                        <Smiley />
-                    </IconButton>
-
-                </InputAdornment>
+                endAdornment: (
+                    <InputAdornment>
+                        <IconButton
+                            onClick={() => {
+                                setOpenPicker((prev) => !prev);
+                            }}
+                        >
+                            <Smiley />
+                        </IconButton>
+                    </InputAdornment>
+                ),
             }}
-        >
-        </StyledInput>
-
-    )
-}
+        />
+    );
+};
 
 
-const Footer = () => {
+
+const Footer = ({ handleNewMessage }) => {
 
     const theme = useTheme();
-
     const [openPicker, setOpenPicker] = useState(false);
+    const [messageInput, setMessageInput] = useState('');
+
+    const handleSendMessage = () => {
+
+        // You can perform any additional checks or processing here
+
+      
+        if (messageInput.trim() !== '') {
+
+            console.log("messageInput", messageInput)
+
+            handleNewMessage(messageInput); // Pass the message to the parent component
+         //   setMessageInput(''); // Clear the input field
+        }
+    };
 
     return (
         <>
@@ -134,21 +151,12 @@ const Footer = () => {
 
                         </Box>
 
-                        <ChatInput setOpenPicker={setOpenPicker} />
+                        <ChatInput setOpenPicker={setOpenPicker} setMessageInput={setMessageInput} />
 
                     </Stack>
 
-
-                    <Box sx={{
-                        borderRadius: 1.5,
-                        height: 48,
-                        width: 48,
-                        backgroundColor: theme.palette.primary.main
-                    }}>
-                        <Stack sx={{
-                            height: "100%", width: "100%", alignItems: "center", justifyContent: "center"
-
-                        }}>
+                    <Box sx={{ borderRadius: 1.5, height: 48, width: 48, backgroundColor: theme.palette.primary.main }} onClick={handleSendMessage}>
+                        <Stack sx={{ height: "100%", width: "100%", alignItems: "center", justifyContent: "center" }}>
                             <IconButton>
                                 <PaperPlane color='#fff' />
                             </IconButton>
@@ -160,7 +168,6 @@ const Footer = () => {
 
         </>
     )
-    
 }
 
 export default Footer
