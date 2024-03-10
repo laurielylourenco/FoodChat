@@ -1,31 +1,30 @@
-import { Box, Container, Paper, Stack, Typography } from '@mui/material'
 import React, { useState } from 'react'
+import { initializeApp } from "firebase/app";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import * as firebaseui from 'firebaseui';
+import { getAnalytics } from "firebase/analytics";
+import { Box, Container, Paper, Stack, Typography } from '@mui/material'
 import { useTheme } from "@mui/material/styles";
 import Header from './Header';
 import Footer from './Footer';
 import Message from './Message';
+import { firebaseConfig } from '../../utils/firebase';
+
+
 
 const Conversation = () => {
 	const theme = useTheme();
-	const backgroundImageStyle = {
-		backgroundImage: `url('./pablo-merchan-montes-GFW3dJRiMsQ-unsplash.jpg')`,
-		backgroundSize: "cover",
-		backgroundPosition: "center",
-		display: 'flex',
-		justifyContent: 'center',
-		alignItems: 'center',
-		height: '95vh'
-	};
 
 	const [user, setUser] = useState(null);
 	const [messageInput, setMessageInput] = useState('');
 	const [messages, setMessages] = useState([]);
+	const firebaseApp = initializeApp(firebaseConfig);
 
 	const handleNewMessage = async (messageInput) => {
 
 		try {
 
-			console.log("index.js", messageInput)
+			//console.log("index.js", messageInput)
 			if (messageInput.trim() === '') {
 				return;
 			}
@@ -38,8 +37,6 @@ const Conversation = () => {
 			};
 
 			setMessages((prevMessages) => [...prevMessages, newMessage]);
-
-
 
 			const response = await fetch('http://localhost:5000/detectIntent', {
 				method: 'POST',
@@ -57,7 +54,7 @@ const Conversation = () => {
 
 			const msg = await response.json();
 
-			console.log('msg:   ', msg);
+			//console.log('msg:   ', msg);
 
 			const texto = msg[0].queryResult.fulfillmentText;
 
@@ -76,7 +73,7 @@ const Conversation = () => {
 
 				for (let i = 0; i < resp.length; i++) {
 					const messageType = resp[i].message;
-
+					//console.log('messageType:   ', messageType)
 					if (messageType === 'card') {
 						const newCard = {
 							type: 'card',
@@ -103,21 +100,32 @@ const Conversation = () => {
 						setMessages((prevMessages) => [...prevMessages, newQuickReplies]);
 					} else if (messageType === 'image') {
 						const newImage = {
-							type: 'image',
+							type: 'img',
 							img: resp[i].image.imageUri,
 							incoming: false,
-							sender: 'bot',
-							message: ''
+							sender: 'bot'
 						};
 
 						// Update the state with the new image
 						setMessages((prevMessages) => [...prevMessages, newImage]);
+					} else if (messageType === 'text') {
+
+						//console.log("resp[i].text", resp[i].text.text[0])
+						const newBotText = {
+							type: 'text',
+							message: texto,
+							incoming: false,
+							sender: 'bot',
+							message: resp[i].text.text[0]
+						};
+
+						setMessages((prevMessages) => [...prevMessages, newBotText]);
 					}
 				}
 			}
 
 			setMessageInput('');
-			console.log('messages:  ', messages)
+			//	console.log('messages:  ', messages)
 		} catch (error) {
 			console.error('Error processing message:', error.message);
 		}
@@ -125,20 +133,18 @@ const Conversation = () => {
 
 	};
 
-	return (
-		<Container
-			style={backgroundImageStyle}
-		>
+	const logoutGoogle = (logout) => {
 
-			<Paper
-				elevation={3}
-				style={{
-					padding: '20px',
-					width: '800px', 
-				}}
-			>
-				<Header />
-				<Box sx={{ height: "50vh", overflowY: "scroll", position: "relative" }}>
+		
+		alert(logout)
+	}
+
+	return (
+		<Container>
+
+			<Paper elevation={3} style={{ padding: '20px' }}>
+				<Header logoutGoogle={logoutGoogle} />
+				<Box sx={{ height: "50vh", overflowY: "scroll", position: "relative", backgroundColor: "#efefef" }}>
 					<Message messages={messages} />
 				</Box>
 				<Footer

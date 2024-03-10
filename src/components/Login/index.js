@@ -1,18 +1,16 @@
 import * as React from 'react';
+import { initializeApp } from "firebase/app";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import * as firebaseui from 'firebaseui';
+import { getAnalytics } from "firebase/analytics";
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import { Card, CardContent } from '@mui/material'
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useNavigate } from 'react-router-dom';
+import { firebaseConfig } from '../../utils/firebase';
 
 function Copyright(props) {
   return (
@@ -27,34 +25,30 @@ function Copyright(props) {
   );
 }
 
-// TODO remove, this demo shouldn't need to reset the theme.
+const firebaseApp = initializeApp(firebaseConfig);
+const provider = new GoogleAuthProvider();
+var uiConfig = {
+  signInSuccessUrl: '/chat',
+  signInOptions: [
+    provider.providerId
+  ],
+  tosUrl: 'https://vps49040.publiccloud.com.br/sec/terms.php',
+  privacyPolicyUrl: function () {
+    window.location.assign('https://vps49040.publiccloud.com.br/sec/terms.php');
+  }
+};
 
-const defaultTheme = createTheme();
+var ui = new firebaseui.auth.AuthUI(getAuth());
 
 export default function Login() {
 
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
-
-  const navigate = useNavigate();
-
-  const handleLogin = () => {
-    // Lógica de autenticação
-    // Após o login, redirecionar para a rota "/chat"
-    navigate('/chat');
-  };
-
+  
+  ui.start('#firebaseui-auth-container', uiConfig);
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
+
+    <Container component="main" maxWidth="xs">
+
+      <Card>
         <Box
           sx={{
             marginTop: 8,
@@ -66,14 +60,31 @@ export default function Login() {
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
-         
-          <button onClick={handleLogin}>Login</button>
+
+          <Box id="firebaseui-auth-container">
+          </Box>
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
-      </Container>
-    </ThemeProvider>
+        <CardContent>
+
+
+          <Box
+            sx={{
+              marginTop: 8,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+
+            <Typography component="p" variant="body2">
+              Reserve sua mesa Rango
+            </Typography>
+          </Box>
+        </CardContent>
+      </Card>
+
+      <Copyright sx={{ mt: 8, mb: 4 }} />
+    </Container>
+
   );
 }

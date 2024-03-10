@@ -10,7 +10,7 @@ import Site from '../components/Site';
 const AppRouter = () => {
   const routes = useRoutes([
     { path: '/login', element: <Login /> },
-    { path: '/', element: <Site /> },
+    { path: '/', element: <Login /> },
     { path: '/chat', element: <Conversation /> },
     { path: '/404', element: <Page404 /> },
     { path: '*', element: <Navigate to="/404" replace /> },
@@ -20,19 +20,3 @@ const AppRouter = () => {
 };
 
 export default AppRouter;
-
-
-/* const AppRouter = () => {
-  return (
-    <Router>
-      <Switch>
-        <Route path="/login" component={Login} />
-        <Route path="/" component={Login} />
-        <Route path="/chat" component={Conversation} />
-      </Switch>
-    </Router>
-  );
-};
-
-export default AppRouter;
- */

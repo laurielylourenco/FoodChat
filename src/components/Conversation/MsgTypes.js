@@ -158,10 +158,10 @@ const CardMsg = ({ el }) => {
                         style={{ opacity: 0.85 }}
                     />
                     <CardContent>
-                        <Typography variant="h5" color={el.incoming ? theme.palette.text : "#fff"}>
+                        <Typography variant="h5" color={theme.palette.text }>
                             {el.title}
                         </Typography>
-                        <Typography variant='body2' color={el.incoming ? theme.palette.text : "#fff"}>
+                        <Typography variant='body2' color={theme.palette.text }>
                             {el.message}
                         </Typography>
                     </CardContent>

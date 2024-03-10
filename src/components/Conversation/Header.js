@@ -4,6 +4,7 @@ import { CaretDown, MagnifyingGlass, Phone, VideoCamera } from 'phosphor-react';
 import { styled } from "@mui/material/styles";
 import { faker } from '@faker-js/faker';
 import { useTheme } from "@mui/material/styles";
+import LogoutIcon from '@mui/icons-material/Logout';
 
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -37,14 +38,19 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 
 
 
-const Header = () => {
+const Header = ({logoutGoogle}) => {
     const theme = useTheme();
+
+    const handleLogout = (event) => {
+        logoutGoogle("Vem daqui")
+    };
+
     return (
         <>
             <Box p={2} sx={{
                 height: 30,
                 width: "auto",
-                backgroundColor: "#F8FAFF" ,
+                backgroundColor: "#F8FAFF",
                 boxShadow: "0px 0px 2px rgba(0,0,0,0.25)"
             }}>
 
@@ -87,7 +93,9 @@ const Header = () => {
                         <Divider orientation='vertical' flexItem />
 
                         <IconButton>
-                            <CaretDown />
+                            <LogoutIcon onClick={() => {
+                                handleLogout((prev) => !prev);
+                            }} />
                         </IconButton>
 
                     </Stack>

@@ -1,16 +1,11 @@
 import { Box, Stack } from '@mui/material'
-import React, { useEffect, useState } from 'react'
-import { CardMsg, DocMsg, LinkMsg, MediaMsg, ReplyMsg, TextMsg, Timeline } from './MsgTypes';
+import React from 'react'
+import { CardMsg, DocMsg, LinkMsg, MediaMsg, ReplyMsg, TextMsg } from './MsgTypes';
 
 const Message = ({ messages }) => {
-/* 
-    useEffect(() => {
-        console.log('Mensagens atualizadas:', messages);
-    }, [messages]);  */
 
-    console.log('Message>:   ', messages)
     return (
-        <Box p={3} sx={{ backgroundColor: "#efefef" }} >
+        <Box p={3}  >
             <Stack spacing={3}>
                 {messages.map((msg, index) => {
                     switch (msg.type) {
@@ -29,11 +24,7 @@ const Message = ({ messages }) => {
                     }
                 })}
             </Stack>
-
-
         </Box>
-
-
     )
 }
 
