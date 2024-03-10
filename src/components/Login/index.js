@@ -1,8 +1,7 @@
-import * as React from 'react';
-import { initializeApp } from "firebase/app";
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import  React, { useEffect, useState,useHistory } from 'react';
+import {firebaseInit } from '../../utils/firebaseInit';
+import { GoogleAuthProvider, getAuth, signInWithPopup, signOut } from "firebase/auth";
 import * as firebaseui from 'firebaseui';
-import { getAnalytics } from "firebase/analytics";
 import Avatar from '@mui/material/Avatar';
 import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
@@ -10,7 +9,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Card, CardContent } from '@mui/material'
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { firebaseConfig } from '../../utils/firebase';
+
+
 
 function Copyright(props) {
   return (
@@ -25,8 +25,8 @@ function Copyright(props) {
   );
 }
 
-const firebaseApp = initializeApp(firebaseConfig);
-const provider = new GoogleAuthProvider();
+/* const provider = new GoogleAuthProvider();
+
 var uiConfig = {
   signInSuccessUrl: '/chat',
   signInOptions: [
@@ -36,14 +36,54 @@ var uiConfig = {
   privacyPolicyUrl: function () {
     window.location.assign('https://vps49040.publiccloud.com.br/sec/terms.php');
   }
-};
+}; */
 
-var ui = new firebaseui.auth.AuthUI(getAuth());
+
+
 
 export default function Login() {
 
-  
-  ui.start('#firebaseui-auth-container', uiConfig);
+  const [user, setUser] = useState([]);
+
+  const signInWithGoogle = async () => {
+    try {
+      const provider = new GoogleAuthProvider();
+      const auth = getAuth(firebaseInit)
+      const result = await signInWithPopup(auth, provider);
+      
+      console.log('Login user:   ', result.user)
+      setUser(result.user);
+
+      window.location.replace("/chat")
+    } catch (error) {
+      console.error('Erro ao fazer login com o Google:', error.message);
+    }
+  };
+
+  const handleSignOut = async () => {
+    try {
+      const auth = getAuth(firebaseInit);
+      await signOut(auth);
+      setUser([]);
+      window.location.replace("/login")
+
+    } catch (error) {
+      console.error('Erro ao fazer logout:', error.message);
+    }
+  };
+
+
+/*   React.useEffect(() => {
+
+    ui.start('#firebaseui-auth-container', uiConfig);
+
+    return () => {
+      ui.reset();
+    };
+  }, []); */
+
+
+
   return (
 
     <Container component="main" maxWidth="xs">
@@ -61,12 +101,12 @@ export default function Login() {
             <LockOutlinedIcon />
           </Avatar>
 
-          <Box id="firebaseui-auth-container">
-          </Box>
+          <button onClick={signInWithGoogle}>Login</button>
+          <button onClick={handleSignOut}>Logout</button>
+        {/*   <Box id="firebaseui-auth-container">
+          </Box> */}
         </Box>
         <CardContent>
-
-
           <Box
             sx={{
               marginTop: 8,
@@ -88,3 +128,7 @@ export default function Login() {
 
   );
 }
+
+
+
+

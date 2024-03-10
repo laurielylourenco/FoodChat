@@ -38,11 +38,11 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 
 
 
-const Header = ({logoutGoogle}) => {
+const Header = ({logoutGoogle, userInfo}) => {
     const theme = useTheme();
 
     const handleLogout = (event) => {
-        logoutGoogle("Vem daqui")
+        logoutGoogle(true)
     };
 
     return (

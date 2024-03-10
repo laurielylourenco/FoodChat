@@ -1,24 +1,43 @@
-import React, { useState } from 'react'
-import { initializeApp } from "firebase/app";
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import * as firebaseui from 'firebaseui';
-import { getAnalytics } from "firebase/analytics";
-import { Box, Container, Paper, Stack, Typography } from '@mui/material'
+import React, { useEffect, useState } from 'react'
+import { firebaseInit } from '../../utils/firebaseInit';
+import { getAuth } from 'firebase/auth';
+
+import { Box, Container, Paper } from '@mui/material'
 import { useTheme } from "@mui/material/styles";
 import Header from './Header';
 import Footer from './Footer';
 import Message from './Message';
-import { firebaseConfig } from '../../utils/firebase';
-
-
 
 const Conversation = () => {
-	const theme = useTheme();
 
-	const [user, setUser] = useState(null);
+	const theme = useTheme();
+	const [user, setUser] = useState([]);
 	const [messageInput, setMessageInput] = useState('');
 	const [messages, setMessages] = useState([]);
-	const firebaseApp = initializeApp(firebaseConfig);
+
+	const initApp =  () => {
+		try {
+
+			console.log('firebaseInit: ',firebaseInit)
+	
+			const auth = getAuth(firebaseInit)
+			auth.onAuthStateChanged(function (user) {
+			
+					console.log('user:  ',user)
+			}, function (error) {
+
+				console.log('error:  ',error)
+			});
+		} catch (error) {
+			console.error('Error initializing Firebase:', error.message);
+		}
+	};
+	
+
+	useEffect(() => {
+		initApp();
+	}, []);
+
 
 	const handleNewMessage = async (messageInput) => {
 
@@ -135,20 +154,27 @@ const Conversation = () => {
 
 	const logoutGoogle = (logout) => {
 
-		
-		alert(logout)
+		if (logout) {
+			window.location.replace("/login")
+		 const auth = getAuth(firebaseInit)
+			auth.signOut().then(() => {
+			
+				console.log('Usuário deslogado com sucesso.');
+			}).catch((error) => {
+				console.error('Erro ao tentar deslogar:', error.message);
+			}); 
+		}
+
 	}
 
 	return (
 		<Container>
-
 			<Paper elevation={3} style={{ padding: '20px' }}>
-				<Header logoutGoogle={logoutGoogle} />
+				<Header logoutGoogle={logoutGoogle} userInfo={user} />
 				<Box sx={{ height: "50vh", overflowY: "scroll", position: "relative", backgroundColor: "#efefef" }}>
 					<Message messages={messages} />
 				</Box>
-				<Footer
-					handleNewMessage={handleNewMessage} />
+				<Footer handleNewMessage={handleNewMessage} />
 			</Paper>
 		</Container>
 	);
