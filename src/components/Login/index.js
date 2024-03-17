@@ -1,15 +1,15 @@
-import  React, { useEffect, useState,useHistory } from 'react';
-import {firebaseInit } from '../../utils/firebaseInit';
+import React, { useEffect, useState, useHistory } from 'react';
+import { firebaseInit } from '../../utils/firebaseInit';
 import { GoogleAuthProvider, getAuth, signInWithPopup, signOut } from "firebase/auth";
 import * as firebaseui from 'firebaseui';
 import Avatar from '@mui/material/Avatar';
 import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { Card, CardContent } from '@mui/material'
+import { Button, Card, CardContent } from '@mui/material'
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-
+import GoogleIcon from '@mui/icons-material/Google';
 
 
 function Copyright(props) {
@@ -50,7 +50,7 @@ export default function Login() {
       const provider = new GoogleAuthProvider();
       const auth = getAuth(firebaseInit)
       const result = await signInWithPopup(auth, provider);
-      
+
       console.log('Login user:   ', result.user)
       setUser(result.user);
 
@@ -73,14 +73,14 @@ export default function Login() {
   };
 
 
-/*   React.useEffect(() => {
-
-    ui.start('#firebaseui-auth-container', uiConfig);
-
-    return () => {
-      ui.reset();
-    };
-  }, []); */
+  /*   React.useEffect(() => {
+  
+      ui.start('#firebaseui-auth-container', uiConfig);
+  
+      return () => {
+        ui.reset();
+      };
+    }, []); */
 
 
 
@@ -100,11 +100,10 @@ export default function Login() {
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
+          <Button onClick={signInWithGoogle} variant="contained" sx={{ m: 1, bgcolor: 'secondary.main' }} endIcon={<GoogleIcon />}>
+            Login
+          </Button>
 
-          <button onClick={signInWithGoogle}>Login</button>
-          <button onClick={handleSignOut}>Logout</button>
-        {/*   <Box id="firebaseui-auth-container">
-          </Box> */}
         </Box>
         <CardContent>
           <Box
