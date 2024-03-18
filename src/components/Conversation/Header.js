@@ -6,7 +6,6 @@ import { faker } from '@faker-js/faker';
 import { useTheme } from "@mui/material/styles";
 import LogoutIcon from '@mui/icons-material/Logout';
 
-
 const StyledBadge = styled(Badge)(({ theme }) => ({
     "& .MuiBadge-badge": {
         backgroundColor: "#44b700",
@@ -37,10 +36,8 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 }));
 
 
-
 const Header = ({logoutGoogle, userInfo}) => {
     const theme = useTheme();
-
     const handleLogout = (event) => {
         logoutGoogle(true)
     };
@@ -69,7 +66,7 @@ const Header = ({logoutGoogle, userInfo}) => {
                                 anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
                                 variant="dot"
                             >
-                                <Avatar src={faker.image.avatar()} >
+                                <Avatar src={userInfo.photoURL} >
                                 </Avatar>
                             </StyledBadge>
 
@@ -78,7 +75,7 @@ const Header = ({logoutGoogle, userInfo}) => {
 
                         <Stack spacing={0.2}>
                             <Typography>
-                                {faker.name.fullName()}
+                                {userInfo.displayName}
 
                             </Typography>
                         </Stack>
@@ -93,9 +90,7 @@ const Header = ({logoutGoogle, userInfo}) => {
                         <Divider orientation='vertical' flexItem />
 
                         <IconButton>
-                            <LogoutIcon onClick={() => {
-                                handleLogout((prev) => !prev);
-                            }} />
+                            <LogoutIcon onClick={() => { handleLogout((prev) => !prev);}} />
                         </IconButton>
 
                     </Stack>

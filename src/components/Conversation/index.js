@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { firebaseInit } from '../../utils/firebaseInit';
-import { getAuth } from 'firebase/auth';
+import { GoogleAuthProvider, getAuth, signInWithPopup, signOut } from "firebase/auth";
 
 import { Box, Container, Paper } from '@mui/material'
 import { useTheme } from "@mui/material/styles";
@@ -15,24 +15,21 @@ const Conversation = () => {
 	const [messageInput, setMessageInput] = useState('');
 	const [messages, setMessages] = useState([]);
 
-	const initApp =  () => {
+	const initApp = () => {
 		try {
-
-			console.log('firebaseInit: ',firebaseInit)
-	
 			const auth = getAuth(firebaseInit)
 			auth.onAuthStateChanged(function (user) {
-			
-					console.log('user:  ',user)
+				setUser(user)
+
 			}, function (error) {
 
-				console.log('error:  ',error)
+				console.log('error:  ', error)
 			});
 		} catch (error) {
 			console.error('Error initializing Firebase:', error.message);
 		}
 	};
-	
+
 
 	useEffect(() => {
 		initApp();
@@ -43,7 +40,6 @@ const Conversation = () => {
 
 		try {
 
-			//console.log("index.js", messageInput)
 			if (messageInput.trim() === '') {
 				return;
 			}
@@ -57,7 +53,7 @@ const Conversation = () => {
 
 			setMessages((prevMessages) => [...prevMessages, newMessage]);
 
-			const response = await fetch('http://localhost:5000/detectIntent', {
+		const response = await fetch('http://localhost:5000/detectIntent', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -65,7 +61,7 @@ const Conversation = () => {
 				body: JSON.stringify({
 					texto: messageInput,
 				})
-			});
+			}); 
 
 			if (!response.ok) {
 				throw new Error(`Request failed with status ${response.status}`);
@@ -152,20 +148,21 @@ const Conversation = () => {
 
 	};
 
-	const logoutGoogle = (logout) => {
 
-		if (logout) {
+	const logoutGoogle = async (logout) => {
+		try {
+			const auth = getAuth(firebaseInit);
+			await signOut(auth);
+
+			console.log('Usuário deslogado com sucesso.',logout);
+			setUser([]);
 			window.location.replace("/login")
-		 const auth = getAuth(firebaseInit)
-			auth.signOut().then(() => {
-			
-				console.log('Usuário deslogado com sucesso.');
-			}).catch((error) => {
-				console.error('Erro ao tentar deslogar:', error.message);
-			}); 
-		}
 
-	}
+		} catch (error) {
+			console.error('Erro ao fazer logout:', error.message);
+		}
+	};
+
 
 	return (
 		<Container>
