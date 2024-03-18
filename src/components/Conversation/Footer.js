@@ -155,7 +155,7 @@ const Footer = ({ handleNewMessage }) => {
 
                     </Stack>
 
-                    <Box sx={{ borderRadius: 1.5, height: 48, width: 48, backgroundColor: theme.palette.primary.main }} onClick={handleSendMessage}>
+                    <Box sx={{ borderRadius: 1.5, height: 48, width: 48, backgroundColor: '#D95204' }} onClick={handleSendMessage}>
                         <Stack sx={{ height: "100%", width: "100%", alignItems: "center", justifyContent: "center" }}>
                             <IconButton>
                                 <PaperPlane color='#fff' />

@@ -11,8 +11,10 @@ function App() {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    height: '95vh'
+    height: '95vh',
+    width: '100%'
   };
+  
 
   return (
     <div className="App" style={backgroundImageStyle}  >

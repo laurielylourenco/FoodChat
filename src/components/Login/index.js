@@ -97,10 +97,13 @@ export default function Login() {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <Avatar sx={{ m: 1, bgcolor: 'warning.light' }}>
             <LockOutlinedIcon />
           </Avatar>
-          <Button onClick={signInWithGoogle} variant="contained" sx={{ m: 1, bgcolor: 'secondary.main' }} endIcon={<GoogleIcon />}>
+          <Button onClick={signInWithGoogle} variant="contained"  sx={{ m: 1, background: 'warning.light', bgcolor: 'warning.light',  '&:hover, &:focus': {
+              color: '#fff', //  '#ff9800'
+              background: '#D96704',
+            } }} endIcon={<GoogleIcon />}>
             Login
           </Button>
 
