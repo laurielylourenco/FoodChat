@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { firebaseInit } from '../../utils/firebaseInit';
 import { GoogleAuthProvider, getAuth, signInWithPopup, signOut } from "firebase/auth";
 
-import { Box, Container, Paper } from '@mui/material'
+import { Box, Container, Paper, Grid } from '@mui/material'
 import { useTheme } from "@mui/material/styles";
 import Header from './Header';
 import Footer from './Footer';
@@ -53,7 +53,7 @@ const Conversation = () => {
 
 			setMessages((prevMessages) => [...prevMessages, newMessage]);
 
-		const response = await fetch('http://localhost:5000/detectIntent', {
+			const response = await fetch('http://vps49040.publiccloud.com.br:5000/detectIntent', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -61,7 +61,7 @@ const Conversation = () => {
 				body: JSON.stringify({
 					texto: messageInput,
 				})
-			}); 
+			});
 
 			if (!response.ok) {
 				throw new Error(`Request failed with status ${response.status}`);
@@ -154,7 +154,7 @@ const Conversation = () => {
 			const auth = getAuth(firebaseInit);
 			await signOut(auth);
 
-			console.log('Usuário deslogado com sucesso.',logout);
+			console.log('Usuário deslogado com sucesso.', logout);
 			setUser([]);
 			window.location.replace("/login")
 
@@ -165,14 +165,21 @@ const Conversation = () => {
 
 
 	return (
-		<Container>
-			<Paper elevation={3} style={{ padding: '20px' }}>
-				<Header logoutGoogle={logoutGoogle} userInfo={user} />
-				<Box sx={{ height: "50vh", overflowY: "scroll", position: "relative", backgroundColor: "#efefef" }}>
-					<Message messages={messages} />
-				</Box>
-				<Footer handleNewMessage={handleNewMessage} />
-			</Paper>
+
+		<Container maxWidth="sm">
+			<Grid container justifyContent="center">
+				<Grid item xs={12} sm={12} md={12}> {/* Define o tamanho do Grid */}
+					<Box width="100%">
+						<Paper elevation={3} style={{ padding: '20px' }}>
+							<Header logoutGoogle={logoutGoogle} userInfo={user} />
+							<Box sx={{ height: "50vh", overflowY: "scroll", position: "relative", backgroundColor: "#efefef" }}>
+								<Message messages={messages} />
+							</Box>
+							<Footer handleNewMessage={handleNewMessage} />
+						</Paper>
+					</Box>
+				</Grid>
+			</Grid>
 		</Container>
 	);
 }

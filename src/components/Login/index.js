@@ -25,21 +25,6 @@ function Copyright(props) {
   );
 }
 
-/* const provider = new GoogleAuthProvider();
-
-var uiConfig = {
-  signInSuccessUrl: '/chat',
-  signInOptions: [
-    provider.providerId
-  ],
-  tosUrl: 'https://vps49040.publiccloud.com.br/sec/terms.php',
-  privacyPolicyUrl: function () {
-    window.location.assign('https://vps49040.publiccloud.com.br/sec/terms.php');
-  }
-}; */
-
-
-
 
 export default function Login() {
 
@@ -72,36 +57,25 @@ export default function Login() {
     }
   };
 
-
-  /*   React.useEffect(() => {
-  
-      ui.start('#firebaseui-auth-container', uiConfig);
-  
-      return () => {
-        ui.reset();
-      };
-    }, []); */
-
-
-
   return (
 
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="sm">
 
       <Card>
         <Box
+         width={500}
           sx={{
             marginTop: 8,
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center',
+            alignItems: 'center'
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: 'warning.light' }}>
             <LockOutlinedIcon />
           </Avatar>
           <Button onClick={signInWithGoogle} variant="contained"  sx={{ m: 1, background: 'warning.light', bgcolor: 'warning.light',  '&:hover, &:focus': {
-              color: '#fff', //  '#ff9800'
+              color: '#fff', 
               background: '#D96704',
             } }} endIcon={<GoogleIcon />}>
             Login
