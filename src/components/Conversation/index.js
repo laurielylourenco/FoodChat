@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { firebaseInit } from '../../utils/firebaseInit';
-import { GoogleAuthProvider, getAuth, signInWithPopup, signOut } from "firebase/auth";
+import {getAuth,signOut } from "firebase/auth";
 
 import { Box, Container, Paper, Grid } from '@mui/material'
 import { useTheme } from "@mui/material/styles";
 import Header from './Header';
 import Footer from './Footer';
 import Message from './Message';
+import { firebaseConfig } from '../../utils/firebase';
 
 const Conversation = () => {
 
@@ -16,6 +17,7 @@ const Conversation = () => {
 	const [messages, setMessages] = useState([]);
 
 	const initApp = () => {
+		console.log("Teste1",firebaseConfig.hom,'teste2',firebaseConfig.hom1)
 		try {
 			const auth = getAuth(firebaseInit)
 			auth.onAuthStateChanged(function (user) {
@@ -88,7 +90,7 @@ const Conversation = () => {
 
 				for (let i = 0; i < resp.length; i++) {
 					const messageType = resp[i].message;
-					//console.log('messageType:   ', messageType)
+
 					if (messageType === 'card') {
 						const newCard = {
 							type: 'card',
@@ -159,6 +161,8 @@ const Conversation = () => {
 			window.location.replace("/login")
 
 		} catch (error) {
+
+			
 			console.error('Erro ao fazer logout:', error.message);
 		}
 	};
@@ -166,7 +170,7 @@ const Conversation = () => {
 
 	return (
 
-		<Container maxWidth="sm">
+		<Container maxWidth="md">
 			<Grid container justifyContent="center">
 				<Grid item xs={12} sm={12} md={12}> {/* Define o tamanho do Grid */}
 					<Box width="100%">
